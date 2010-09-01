@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+<h1>Test application</h1>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Person details</h1>
+
+
+<div class="item-header">First name:</div>{{ object.firstname }}<br>
+<h2>Last name:</h2> {{ object.lastname }}<br>
+<h2>E-mail:</h2> {{ object.email }}<br>
+<h2>phone:</h2> {{ object.phone }}<br>
+<h2>About {{ object.firstname }}:</h2> {{ object.biography }}
+
+{% endblock %}
