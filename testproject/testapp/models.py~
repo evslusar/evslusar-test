@@ -8,3 +8,16 @@ class Person(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=10)
     biography = models.TextField()
+
+
+class HttpRequestLog:
+
+    request_method_choices = (
+        ('G', 'GET'),
+        ('P', 'POST'),
+    )
+
+    path = models.CharField(max_length=200)
+    method = models.CharField(max_length=1, choices=request_method_choices)
+    request_date = models.DateTimeField(auto_now_add=True)
+    request_dict = models.TextField()
