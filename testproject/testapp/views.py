@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
 def default_person():
-    return Person.objects.get(firstname__iexact = 'Evgeniy', lastname__iexact = 'Slusar')
+    return Person.objects.get(pk=1)
 
 def default_person_info():
     p = default_person()
