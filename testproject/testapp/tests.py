@@ -70,7 +70,24 @@ class PersonEditTest(TestCase):
         self.assertEqual(dp.email, params['email'])
         self.assertEqual(dp.phone, params['phone'])
         self.assertEqual(dp.biography, params['biography'])
+
+
+
+from django.conf import settings
+
+class ContextProcTest(TestCase):
+
+    def test_context_proc(self):
+        print '\nsettings:'  
+        print settings.DEBUG
+        print settings.TEMPLATE_DIRS
         
+        try:
+            response = self.client.get('/settings/')
+            context_settings = response.context['settings']
+        except:
+            self.assertTrue(False, 'Exception while perfroming /settings/ request')
+        self.assertEqual(settings, context_settings)
 
 
 
