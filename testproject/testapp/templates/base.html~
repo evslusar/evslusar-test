@@ -45,8 +45,8 @@ h1
 {% block links %}
 
 <h1>Links</h1>
-<a href="">Person info</a>
-<a href="log/">Request log</a>
+<a href="/">Person info</a>
+<a href="/log/">Request log</a>
 
 {% endblock %}
 </div>
