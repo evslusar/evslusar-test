@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -8,6 +9,12 @@ class Person(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=10)
     biography = models.TextField()
+
+
+class PersonForm(ModelForm):
+    
+    class Meta:
+        model = Person
 
 
 class HttpRequestLog(models.Model):
