@@ -6,7 +6,7 @@
 <h1>Request log</h1>
 <ul>
     {% for log_item in object_list %}
-        <li>{{ log_item.request_string }}   at   {{ log_item.request_date|date }}</li>
+        <li>{{ log_item.request_string }} at {{ log_item.request_date }}</li>
     {% endfor %}
 </ul>
 

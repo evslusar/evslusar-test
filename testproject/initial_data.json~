@@ -6,8 +6,8 @@
       "firstname": "Evgeniy",
       "lastname": "Slusar",
       "email": "evslusar@gmail.com",
-      "phone": "0951234567",
-      "biography": "My biography...\n\n\n..."
+      "phone": 951234567,
+      "biography": "My biography..."
     }
   }
 ]

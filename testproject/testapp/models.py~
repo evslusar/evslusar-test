@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django import forms
 
 # Create your models here.
 
@@ -11,10 +11,12 @@ class Person(models.Model):
     biography = models.TextField()
 
 
-class PersonForm(ModelForm):
-    
+class PersonForm(forms.ModelForm):
+    phone = forms.RegexField(regex='\d+', max_length=10, error_messages = {'invalid': 'Enter a valid phone number'})
+
     class Meta:
-        model = Person
+         model = Person
+    
 
 
 class HttpRequestLog(models.Model):

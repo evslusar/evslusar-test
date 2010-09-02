@@ -61,7 +61,7 @@ class HttpRequestLogTest(TestCase):
 class PersonEditTest(TestCase):
 
     def test_person_edit(self):
-        params = { 'firstname': 'Evgeniy', 'lastname': 'Slusar', 'email': 'evslusar@gmail.com', 'phone': '0000000000', 'biography': 'bio' }
+        params = { 'firstname': 'Evgeniy', 'lastname': 'Slusar', 'email': 'abs@gmail.com', 'phone': 123, 'biography': 'bio' }
  
         self.client.post('/edit/', params)
         dp = default_person()
