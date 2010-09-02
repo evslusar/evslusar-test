@@ -21,3 +21,10 @@ class HttpRequestLog(models.Model):
     method = models.CharField(max_length=1, choices=request_method_choices)
     request_date = models.DateTimeField(auto_now_add=True)
     request_dict = models.TextField()
+
+    def request_string(self):
+        if self.method == 'G':
+            method = 'GET'
+        elif self.method == 'P':
+            method = 'POST'
+        return "%s %s" % (method, self.path,) 

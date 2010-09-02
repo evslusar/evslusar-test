@@ -10,7 +10,7 @@ class Person(models.Model):
     biography = models.TextField()
 
 
-class HttpRequestLog:
+class HttpRequestLog(models.Model):
 
     request_method_choices = (
         ('G', 'GET'),
@@ -21,3 +21,11 @@ class HttpRequestLog:
     method = models.CharField(max_length=1, choices=request_method_choices)
     request_date = models.DateTimeField(auto_now_add=True)
     request_dict = models.TextField()
+
+    def __unicode__(self):
+        if self.method == 'G':
+            method = 'GET'
+        elif self.method == 'P':
+            method = 'POST'
+        params = 
+        return None

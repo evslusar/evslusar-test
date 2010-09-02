@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>Request log</h1>
+<ul>
+    {% for log_item in object_list %}
+        <li>{{ log_item.request_string }} at {{ log_item.request_date|date }} {{ log_item.request_date|time }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
