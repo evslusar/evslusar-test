@@ -46,6 +46,7 @@ h1
 
 <h1>Links</h1>
 <a href="/">Person info</a>
+<a href="/edit/">Person edit</a>
 <a href="/log/">Request log</a>
 
 {% endblock %}
