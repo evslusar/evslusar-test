@@ -12,6 +12,7 @@ from testapp.models import HttpRequestLog
 
 from django.contrib.auth.models import User
 
+from datetime import date
 
 class PersonModelTest(TestCase):
 
@@ -73,7 +74,13 @@ class PersonEditTest(TestCase):
         self.assertTrue(user.check_password(test_paswd))
         self.client.post('/login/', {'username': test_name, 'password': test_paswd})
 
-        params = { 'firstname': 'Evgeniy', 'lastname': 'Slusar', 'email': 'abs@gmail.com', 'phone': '0000000000', 'biography': 'bio' }
+        params = { 'firstname': 'Evgeniy', 
+                   'lastname': 'Slusar', 
+                   'email': 'abs@gmail.com', 
+                   'phone': '0000000000', 
+                   'biography': 'bio',
+                   'birthdate': date(2010,1,1)
+       }
 
         self.client.post('/edit/', params)
         dp = default_person()
@@ -82,6 +89,7 @@ class PersonEditTest(TestCase):
         self.assertEqual(dp.email, params['email'])
         self.assertEqual(dp.phone, params['phone'])
         self.assertEqual(dp.biography, params['biography'])
+        self.assertEqual(dp.birthdate, params['birthdate'])
 
 
 
@@ -97,8 +105,12 @@ class ContextProcTest(TestCase):
 
 
 
+class CalendarTest(TestCase):
 
+    def test_birthdate_field(self):
 
+        person = default_person()
+        self.assertEqual(person.birthdate, date(1987, 4, 19))
 
 
 

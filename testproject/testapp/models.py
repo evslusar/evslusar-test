@@ -9,6 +9,7 @@ class Person(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=10)
     biography = models.TextField()
+    birthdate = models.DateField()
 
 
 class PersonForm(forms.ModelForm):
