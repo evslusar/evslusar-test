@@ -6,8 +6,21 @@
       "firstname": "Evgeniy",
       "lastname": "Slusar",
       "email": "evslusar@gmail.com",
-      "phone": 951234567,
+      "phone": "0951234567",
       "biography": "My biography..."
     }
-  }
+  },
+
+    {
+        "pk": "1", 
+        "model": "auth.user", 
+        "fields": {
+            "username": "test", 
+            "first_name": "Test", 
+            "last_name": "Client", 
+            "is_active": true,
+            "password": "123"
+        }
+    }
+
 ]
