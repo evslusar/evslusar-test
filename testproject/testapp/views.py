@@ -18,6 +18,10 @@ def request_log_info():
     return { 'queryset': HttpRequestLog.objects.all().order_by('-request_date'), 'template_name': 'request_log_list.html' }
 
 
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def edit_view(request):
     form = PersonForm()
     if request.method == 'GET':
@@ -27,9 +31,14 @@ def edit_view(request):
         if form.is_valid(): 
             form.save()
             return HttpResponseRedirect('/')
-    return render_to_response('person_edit.html', {'form' : form})
+    return render_to_response('person_edit.html', {'form' : form}, context_instance=RequestContext(request))
 
 
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 
 from django.conf import settings
