@@ -75,11 +75,6 @@ class PersonEditTest(TestCase):
 
         params = { 'firstname': 'Evgeniy', 'lastname': 'Slusar', 'email': 'abs@gmail.com', 'phone': '0000000000', 'biography': 'bio' }
 
-        response = 
-#        print repr(response.context)
-#        self.assertEquals(response.status_code, 302)
-#        self.assert_(SESSION_KEY in self.client.session)
-
         self.client.post('/edit/', params)
         dp = default_person()
         self.assertEqual(dp.firstname, params['firstname'])

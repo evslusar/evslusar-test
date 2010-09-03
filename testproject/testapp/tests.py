@@ -71,7 +71,7 @@ class PersonEditTest(TestCase):
         user = User.objects.create_user(test_name, test_email, test_paswd)
         user.save()
         self.assertTrue(user.check_password(test_paswd))
-        self.client.post('/accounts/login/', {'username': test_name, 'password': test_paswd})
+        self.client.post('/login/', {'username': test_name, 'password': test_paswd})
 
         params = { 'firstname': 'Evgeniy', 'lastname': 'Slusar', 'email': 'abs@gmail.com', 'phone': '0000000000', 'biography': 'bio' }
 
