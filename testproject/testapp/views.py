@@ -1,6 +1,7 @@
 # Create your views here.
 
 from testapp.models import *
+from testapp.forms import PersonForm
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect

@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 
 # Create your models here.
 
@@ -10,15 +9,6 @@ class Person(models.Model):
     phone = models.CharField(max_length=10)
     biography = models.TextField()
     birthdate = models.DateField()
-
-
-from django.contrib.admin.widgets import AdminDateWidget
-
-class PersonForm(forms.ModelForm):
-    phone = forms.RegexField(regex='^\d{7,10}$', max_length=10, error_messages = {'invalid': 'Enter a valid phone number'})
-
-    class Meta:
-         model = Person
     
 
 
