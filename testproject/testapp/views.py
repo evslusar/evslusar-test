@@ -34,6 +34,11 @@ def edit_view(request):
     return render_to_response('person_edit.html', {'form' : form})
 
 
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 
 from django.conf import settings

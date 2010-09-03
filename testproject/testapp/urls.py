@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     (r'^log/$', list_detail.object_list, request_log_info()),
     (r'^edit/$', edit_view),
     (r'^settings/$', settings_view),
-    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'})
+    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    (r'^logout/$', logout_view)
 )
 

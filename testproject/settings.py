@@ -73,6 +73,10 @@ TEMPLATE_DIRS = (
     #"/home/evgeniy/evslusar-test/testproject/templates"
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
