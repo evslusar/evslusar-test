@@ -12,6 +12,8 @@ class Person(models.Model):
     birthdate = models.DateField()
 
 
+from django.contrib.admin.widgets import AdminDateWidget
+
 class PersonForm(forms.ModelForm):
     phone = forms.RegexField(regex='^\d{7,10}$', max_length=10, error_messages = {'invalid': 'Enter a valid phone number'})
 

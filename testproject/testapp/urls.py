@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 from django.views.generic import list_detail
 from testapp.views import *
-from testproject.settings import LOGIN_URL
 
 urlpatterns = patterns('',
     (r'^$', list_detail.object_detail, default_person_info()),
@@ -12,4 +12,9 @@ urlpatterns = patterns('',
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     (r'^logout/$', logout_view)
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': './media/'}),
+    )
 
