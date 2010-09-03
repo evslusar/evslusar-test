@@ -28,3 +28,27 @@ def edit_view(request):
             form.save()
             return HttpResponseRedirect('/')
     return render_to_response('person_edit.html', {'form' : form})
+
+
+
+
+from django.conf import settings
+from django.template import RequestContext
+
+def settings_context_proc(request):
+    return {'settings': settings}
+
+def settings_view(request):
+    context = RequestContext(request, {}, [settings_context_proc])
+    return render_to_response('view_settings.html', context_instance = context)
+
+
+
+
+
+
+
+
+
+
+
