@@ -18,6 +18,10 @@ def request_log_info():
     return { 'queryset': HttpRequestLog.objects.all().order_by('-request_date'), 'template_name': 'request_log_list.html' }
 
 
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def edit_view(request):
     form = PersonForm()
     if request.method == 'GET':
