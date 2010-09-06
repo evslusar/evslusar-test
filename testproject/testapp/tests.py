@@ -120,6 +120,17 @@ class CalendarTest(AuthTest):
             self.assertContains(response, js_link % js_file)
         for css_file in css_files:
             self.assertContains(response, css_link % (css_file['file'], css_file['media'],))
+
+
+class FieldsReverseOrderTest(AuthTest):
+
+    def test_fields_reverse_order(self):
+        response = self.client.get('/edit/')
+        form = response.context['form']
+        fields_order = [field.name for field in form]
+	test_order = ['birthdate', 'biography', 'phone', 'email', 'lastname', 'firstname']
+        for pair in zip(fields_order, test_order):
+            self.assertEqual(pair[0], pair[1])
         
 
 

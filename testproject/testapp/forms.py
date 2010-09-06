@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.util import ErrorList
 from testapp.models import Person
 from testapp.widgets import CalendarWidget
 
@@ -9,3 +10,6 @@ class PersonForm(forms.ModelForm):
 
     class Meta:
          model = Person
+         fields = ['birthdate', 'biography', 'phone', 'email', 'lastname', 'firstname']
+#         fields = [x for x in reversed([field.name for field in PersonForm])]
+
