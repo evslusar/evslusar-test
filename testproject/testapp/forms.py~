@@ -1,16 +1,6 @@
 from django import forms
 from testapp.models import Person
-
-
-class CalendarWidget(forms.TextInput):
-    class Media:
-        js = ("site_media/js/calendar.js",
-              "site_media/js/DateTimeShortcuts.js")
-
-    def __init__(self, attrs={}):
-        super(CalendarWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'})
-        print '\nmedia:'
-        print self.media
+from testapp.widgets import CalendarWidget
 
 
 class PersonForm(forms.ModelForm):
