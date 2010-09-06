@@ -12,3 +12,9 @@ class HttpRequestLogAdmin(admin.ModelAdmin):
 admin.site.register(Person, PersonAdmin)
 admin.site.register(HttpRequestLog, HttpRequestLogAdmin)
 
+#from django.core import urlresolvers
+#p = Person.objects.get(pk=1)
+#edit_url = urlresolvers.reverse('admin:testapp_person_change', args=(p.id,))
+#print '\nEdit url:'
+#print edit_url
+

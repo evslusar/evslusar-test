@@ -92,4 +92,6 @@ INSTALLED_APPS = (
 )
 
 # admin url
-ADMIN_URL = r'^admin/'
+ADMIN_URL = 'admin/'
+ADMIN_URL_PATTERN = '^' + ADMIN_URL
+
