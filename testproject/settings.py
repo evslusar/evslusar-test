@@ -83,9 +83,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'testproject.testapp',
 )
+
+# admin url
+ADMIN_URL = r'^admin/'
