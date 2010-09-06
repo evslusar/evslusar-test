@@ -1,3 +1,4 @@
+{% load edit_link_tag %}
 
 {% block media %}
 <link type="text/css" href="/site_media/css/style.css" rel="stylesheet" />
@@ -24,6 +25,7 @@
 <a href="/settings/">Settings</a>
 {% if user.is_authenticated %}
 	<a href="/logout/">Log out</a>
+        {% edit_link user %} 
 {% endif %}
 
 {% endblock %}

@@ -142,7 +142,7 @@ class TemplateTagsTest(AuthTest):
         app_name = 'auth'
         model_name = 'user'
         model_instance = response.context['user']
-        self.assertContains(response, self.edit_link(app_name, model_name, model_instance.id))
+        self.assertContains(response, self.edit_link(model_instance._meta.app_label, model_instance._meta.module_name, model_instance.id))
 
 
 

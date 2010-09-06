@@ -1,3 +1,4 @@
+{% load edit_link_tag %}
 
 {% block media %}
 <link type="text/css" href="/site_media/css/style.css" rel="stylesheet" />
