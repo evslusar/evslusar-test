@@ -11,7 +11,6 @@ class Person(models.Model):
     birthdate = models.DateField()
     
 
-
 class HttpRequestLog(models.Model):
 
     request_method_choices = (

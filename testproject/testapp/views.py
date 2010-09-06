@@ -6,6 +6,13 @@ from testapp.forms import PersonForm
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
+from django.conf import settings
+from django.template import RequestContext
+
+
 def default_person():
     return Person.objects.get(pk=1)
 
@@ -20,7 +27,7 @@ def request_log_info():
 
 
 
-from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def edit_view(request):
@@ -35,15 +42,12 @@ def edit_view(request):
     return render_to_response('person_edit.html', {'form' : form}, context_instance=RequestContext(request))
 
 
-from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 
 
-from django.conf import settings
-from django.template import RequestContext
 
 def settings_context_proc(request):
     return {'settings': settings}

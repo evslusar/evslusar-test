@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 
 # Create your models here.
 
@@ -11,7 +10,6 @@ class Person(models.Model):
     biography = models.TextField()
     birthdate = models.DateField()
     
-
 
 class HttpRequestLog(models.Model):
 
