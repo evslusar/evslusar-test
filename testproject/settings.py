@@ -47,6 +47,9 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+# URL prefix for static media files
+SITE_MEDIA_PREFIX = '/site_media/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ')dvzh_)yw^j@s!hx*5x!@3ep++7hr8=*m+ia^-)y7x#-af+fx0'
 

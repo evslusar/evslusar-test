@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 
 {% block extra_media %}
-		<link type="text/css" href="/site_media/css/ui-lightness/jquery-ui-1.8.4.custom.css" rel="stylesheet" />	
-		<script type="text/javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
-		<script type="text/javascript" src="/site_media/js/jquery-ui-1.8.4.custom.min.js"></script>
-		<script type="text/javascript" src="/site_media/js/datepicker.js"></script>
+<!-- <link type="text/css" href="/site_media/css/ui-lightness/jquery-ui-1.8.4.custom.css"  media="jquery-ui-lightness" rel="stylesheet" />  -->
+{{ form.media }}
 {% endblock %}
 
 {% block content %}
