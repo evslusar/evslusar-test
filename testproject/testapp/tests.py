@@ -11,10 +11,9 @@ from django.http import QueryDict
 from testapp.models import HttpRequestLog
 
 from django.contrib.auth.models import User
-
 from datetime import date
-
 from django.conf import settings
+from django.core import urlresolvers
 
 
 class PersonModelTest(TestCase):
@@ -131,7 +130,19 @@ class FieldsReverseOrderTest(AuthTest):
 	test_order = ['birthdate', 'biography', 'phone', 'email', 'lastname', 'firstname']
         for pair in zip(fields_order, test_order):
             self.assertEqual(pair[0], pair[1])
-        
+
+
+class TemplateTagsTest(AuthTest):
+
+    def edit_link(self, app_name, model_name, model_id):
+        return urlresolvers.reverse('admin:%s_%s_change' % (app_name, model_name), args=(model_id,))
+
+    def test_template_tag(self):
+        response = self.client.get('/')
+        app_name = 'auth'
+        model_name = 'user'
+        model_instance = response.context['user']
+        self.assertContains(response, self.edit_link(app_name, model_name, model_instance.id))
 
 
 
