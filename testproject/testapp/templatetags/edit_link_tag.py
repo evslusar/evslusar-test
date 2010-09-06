@@ -1,21 +1,32 @@
 from django import template
 from django.core import urlresolvers
 
+class VariableIsNotModelInstance(Exception):
+    pass
+
+def object_name(obj):
+    try:
+        return obj._meta.module_name
+    except AttributeError:
+        raise VariableIsNotModelInstance
+
+def reverse_edit_link(obj):
+    obj_name = object_name(obj)
+    try:
+        obj_id = obj.id
+        app_label = obj._meta.app_label
+    except AttributeError:
+        raise VariableIsNotModelInstance
+    return urlresolvers.reverse('admin:%s_%s_change' % (app_label, obj_name), args=(obj_id,))
 
 class EditLinkNode(template.Node):
     def __init__(self, object_name):
         self.object_var = template.Variable(object_name)
 
-    def reverse_edit_link(self, obj):
-        obj_id = obj.id
-        app_label = obj._meta.app_label
-        module_name = obj._meta.module_name
-        return urlresolvers.reverse('admin:%s_%s_change' % (app_label, module_name), args=(obj_id,))
-
     def render(self, context):
         obj = self.object_var.resolve(context)
-        link = self.reverse_edit_link(obj)
-        return '<a href="%s">Edit %s</a>' % (link, obj._meta.module_name)
+        link = reverse_edit_link(obj)
+        return '<a href="%s">Edit %s "%s"</a>' % (link, object_name(obj), unicode(obj))
 
 
 def compile_edit_link_tag(parser, token):

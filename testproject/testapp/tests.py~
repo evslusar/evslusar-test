@@ -134,7 +134,7 @@ class FieldsReverseOrderTest(AuthTest):
 
 class TemplateTagsTest(AuthTest):
 
-    def edit_link(self, instance):
+    def edit_link(self, app_name, model_name, model_id):
         return urlresolvers.reverse('admin:%s_%s_change' % (app_name, model_name), args=(model_id,))
 
     def test_template_tag(self):

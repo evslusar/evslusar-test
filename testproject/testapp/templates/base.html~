@@ -25,6 +25,8 @@
 <a href="/settings/">Settings</a>
 {% if user.is_authenticated %}
 	<a href="/logout/">Log out</a>
+        {% edit_link user %} 
+	{% edit_link user.is_active %}
 {% endif %}
 
 {% endblock %}
