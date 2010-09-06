@@ -4,7 +4,7 @@ from django.conf import settings
 class CalendarWidget(TextInput):
     class Media:
         css = {
-            'all': (settings.SITE_MEDIA_PREFIX + 'css/ui-lightness/jquery-ui-1.8.4.custom.css',)
+            'abs': (settings.SITE_MEDIA_PREFIX + 'css/ui-lightness/jquery-ui-1.8.4.custom.css',)
         }
         js = (settings.SITE_MEDIA_PREFIX + "js/jquery-1.4.2.min.js", 
               settings.SITE_MEDIA_PREFIX + "js/jquery-ui-1.8.4.custom.min.js",

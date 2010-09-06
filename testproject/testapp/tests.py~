@@ -14,6 +14,9 @@ from django.contrib.auth.models import User
 
 from datetime import date
 
+from django.conf import settings
+
+
 class PersonModelTest(TestCase):
 
     def test_initial_data(self):
@@ -61,19 +64,22 @@ class HttpRequestLogTest(TestCase):
         self.assertEqual(params['b'], '2')
 
 
-class PersonEditTest(TestCase):
 
-    def test_person_edit(self):
-
+class AuthTest(TestCase):
+    def setUp(self):
         test_name = 'test'
         test_paswd = 'password'
         test_email = 'test@mail.com'
  
         user = User.objects.create_user(test_name, test_email, test_paswd)
         user.save()
-        self.assertTrue(user.check_password(test_paswd))
+
         self.client.post('/login/', {'username': test_name, 'password': test_paswd})
 
+
+class PersonEditTest(AuthTest):
+
+    def test_person_edit(self):
         params = { 'firstname': 'Evgeniy', 
                    'lastname': 'Slusar', 
                    'email': 'abs@gmail.com', 
@@ -89,11 +95,9 @@ class PersonEditTest(TestCase):
         self.assertEqual(dp.email, params['email'])
         self.assertEqual(dp.phone, params['phone'])
         self.assertEqual(dp.biography, params['biography'])
-        self.assertEqual(dp.biography, params['birthdate'])
+        self.assertEqual(dp.birthdate, params['birthdate'])
 
 
-
-from django.conf import settings
 
 class ContextProcTest(TestCase):
 
@@ -103,15 +107,20 @@ class ContextProcTest(TestCase):
         self.assertEqual(settings, context_settings)
 
 
+class CalendarTest(AuthTest):
 
+    def test_calendar_widget(self):
+        css_link = '<link href="' + settings.SITE_MEDIA_PREFIX + 'css/%s" type="text/css" media="%s" rel="stylesheet" />'
+        css_files = ({'file': 'ui-lightness/jquery-ui-1.8.4.custom.css', 'media': 'all'},)
+        js_link = '<script type="text/javascript" src="' + settings.SITE_MEDIA_PREFIX + 'js/%s"></script>'
+        js_files = ('jquery-1.4.2.min.js', 'jquery-ui-1.8.4.custom.min.js', 'datepicker.js',)
 
-class CalendarTest(TestCase):
-
-    def test_birthdate_field(self):
-
-        person = default_person()
-        self.assertEqual(person.birthdate, date(1987, 4, 19))
-
+        response = self.client.get('/edit/')
+        for js_file in js_files:
+            self.assertContains(response, js_link % js_file)
+        for css_file in css_files:
+            self.assertContains(response, css_link % (css_file['file'], css_file['media'],))
+        
 
 
 
