@@ -164,19 +164,27 @@ class CommandsTest(AuthTest):
 
 
 class SignalsTest(AuthTest):
-    def check_entry(self, entry):
+    def check_entry_unique(self, entry):
         try: 
-            DbChangesLog.objects.get(action__exact=entry['action'], 
-                                     modelname__iexact=entry['name'])
-        except DoesNotExist:
+            entries = DbChangesLog.objects.filter(
+                                        action__exact=entry['action'], 
+                                        modelname__iexact=entry['name'])
+        except ObjectDoesNotExist:
             self.assertTrue(False, 'DbChangesLog entry not found')
+        self.assertEqual(len(entries), 1)
 
     def test_signals(self):
+        obj = HttpRequestLog.objects.get(pk=1)
+        obj.path = '/'
+        obj.save()
+        obj.delete()
         test_entries = ({'action': 'CREATE', 'name': 'person'},
                         {'action': 'CREATE', 'name': 'user'},
+                        {'action': 'EDIT', 'name': 'httprequestlog'},
+                        {'action': 'DELETE', 'name': 'httprequestlog'},
                        )
         for entry in test_entries:
-            self.check_entry(entry)
+            self.check_entry_unique(entry)
 
 
 
