@@ -10,6 +10,8 @@ def get_items_count_list():
              for model in models]
 
 class Command(NoArgsCommand):
+    help = "Prints all project models and the count of objects in every model"
+
     def handle_noargs(self, **options):
         items_count = get_items_count_list()
         print '\nInstalled models:'

@@ -6,7 +6,7 @@ def get_items_count_list():
     tables = connection.introspection.table_names()
     models = connection.introspection.installed_models(tables)
     return [{'model': model._meta.module_name, 
-             'count': len(model.objects.all())}
+             'count': model.objects.all().count()}
              for model in models]
 
 class Command(NoArgsCommand):
