@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     (r'^settings/$', settings_view),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     (r'^logout/$', logout_view),
-    (settings.ADMIN_URL, include(admin.site.urls)),
+    (settings.ADMIN_URL_PATTERN, include(admin.site.urls)),
 )
 
 if settings.DEBUG:
