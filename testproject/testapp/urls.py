@@ -9,7 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', list_detail.object_detail, default_person_info()),
-    (r'^log/$', list_detail.object_list, request_log_info()),
+    (r'^log/$', request_log_view),
     (r'^edit/$', edit_view),
     (r'^settings/$', settings_view),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),

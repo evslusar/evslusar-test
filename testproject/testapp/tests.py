@@ -16,7 +16,7 @@ from datetime import date
 from django.conf import settings
 from django.core import urlresolvers
 from testapp.management.commands import countitems
-
+from django.core import paginator
 
 class PersonModelTest(TestCase):
 
@@ -184,6 +184,22 @@ class SignalsTest(AuthTest):
             self.check_entry_unique(entry)
 
 
+class ListViewTest(TestCase):
+    def test_list_view(self):
+        response = self.client.get('/log/')
+        entries = response.context['entries']
+        self.assertTrue(isinstance(entries, paginator.Page))
+        self.assertTrue(entries.has_next)
+        self.assertEqual(entries.number, 1)
+
+        for i in range(1, 10):
+            self.client.get('/log/')
+        response = self.client.get('/log/?page=2')
+        entries = response.context['entries']
+        self.assertTrue(isinstance(entries, paginator.Page))
+        self.assertTrue(entries.has_next)
+        self.assertTrue(entries.has_previous)
+        self.assertEqual(entries.number, 2)
 
 
 
