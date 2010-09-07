@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from django.conf import settings
 from django.core import urlresolvers
+from testapp.management.commands import countitems
 
 
 class PersonModelTest(TestCase):
@@ -143,6 +144,22 @@ class TemplateTagsTest(AuthTest):
         model_name = 'user'
         model_instance = response.context['user']
         self.assertContains(response, self.edit_link(app_name, model_name, model_instance.id))
+
+
+class CommandsTest(AuthTest):
+    def find_item(self, x, items_list):
+        for item in items_list:
+            if x == item: return True
+        return False
+
+    def check_items_list(self, origin, test):
+        for item in test:
+            self.assertTrue(self.find_item(item, origin))
+
+    def test_get_items_count_list(self):
+        items_count_list = countitems.get_items_count_list()
+        test_list = [{'model': 'Person', 'count':1}, {'model': 'User', 'count':1}, {'model': 'HttpRequestLog', 'count':1}]
+        self.check_items_list(items_count_list, test_list)
 
 
 
