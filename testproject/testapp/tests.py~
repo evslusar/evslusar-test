@@ -158,7 +158,7 @@ class CommandsTest(AuthTest):
 
     def test_get_items_count_list(self):
         items_count_list = countitems.get_items_count_list()
-        test_list = [{'model': 'Person', 'count':1}, {'model': 'User', 'count':1}, {'model': 'HttpRequestLog', 'count':1}]
+        test_list = [{'model': 'person', 'count':1}, {'model': 'user', 'count':1}, {'model': 'httprequestlog', 'count':1}]
         self.check_items_list(items_count_list, test_list)
 
 

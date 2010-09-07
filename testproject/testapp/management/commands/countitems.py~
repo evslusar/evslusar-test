@@ -1,7 +1,17 @@
-from django.core.management.commands import NoArgsCommand
+from django.core.management.base import NoArgsCommand
+from django.db import connection
+from django.db.models import Count 
 
 def get_items_count_list():
-    return []
+    tables = connection.introspection.table_names()
+    models = connection.introspection.installed_models(tables)
+    return [{'model': model._meta.module_name, 
+             'count': len(model.objects.all())}
+             for model in models]
 
 class Command(NoArgsCommand):
-    pass
+    def handle_noargs(self, **options):
+        items_count = get_items_count_list()
+        print '\nInstalled models:'
+        for item in items_count:
+            print 'Model "%s" contains %d objects.' % (item['model'], item['count'])
