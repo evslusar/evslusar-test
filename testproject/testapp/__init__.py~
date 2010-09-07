@@ -1,3 +1,0 @@
-from testapp import dblistener
-
-dblistener.Listener.install()
