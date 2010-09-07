@@ -3,6 +3,7 @@
 from django.test import TestCase
 
 from testapp.models import Person
+from testapp.models import DbChangesLog
 from testapp.views import default_person_info
 from testapp.views import default_person
 
@@ -160,6 +161,23 @@ class CommandsTest(AuthTest):
         items_count_list = countitems.get_items_count_list()
         test_list = [{'model': 'person', 'count':1}, {'model': 'user', 'count':1}, {'model': 'httprequestlog', 'count':1}]
         self.check_items_list(items_count_list, test_list)
+
+
+class SignalsTest(AuthTest):
+    def check_entry(self, entry):
+        try: 
+            DbChangesLog.objects.get(action__exact=entry['action'], 
+                                     modelname__iexact=entry['name'])
+        except ObjectDoesNotExist:
+            self.assertTrue(False, 'DbChangesLog entry not found')
+
+    def test_signals(self):
+        test_entries = ({'action': 'CREATE', 'name': 'person'},
+                        {'action': 'CREATE', 'name': 'user'},
+                       )
+        for entry in test_entries:
+            self.check_entry(entry)
+
 
 
 

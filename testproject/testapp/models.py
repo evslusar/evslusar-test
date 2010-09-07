@@ -28,4 +28,17 @@ class HttpRequestLog(models.Model):
             method = 'GET'
         elif self.method == 'P':
             method = 'POST'
-        return "%s %s" % (method, self.path,) 
+        return "%s %s" % (method, self.path,)
+
+
+class DbChangesLog(models.Model):
+
+    action_choices = (
+        ('CREATE', 'CREATE'),
+        ('EDIT', 'EDIT'),
+        ('DELETE', 'DELETE'),
+    )
+
+    action = models.CharField(max_length=6, choices=action_choices)
+    actiondate = models.DateTimeField(auto_now_add=True)
+    modelname = models.CharField(max_length=40)
