@@ -220,7 +220,7 @@ class RequestPriorityTest(TestCase):
     def test_request_priority(self):
         priority_values = (2, 3, 4)
         for val in priority_values:
-            make_test_request(val)
+            self.make_test_request(val)
             try:
                 log_item = HttpRequestLog.objects.get(priority__value__exact=val)
             except ObjectDoesNotExist:
