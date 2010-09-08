@@ -8,7 +8,7 @@ from testapp.views import default_person_info
 from testapp.views import default_person
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import QueryDict
+from django import http
 from testapp.models import HttpRequestLog
 
 from django.contrib.auth.models import User
@@ -60,7 +60,7 @@ class HttpRequestLogTest(TestCase):
             self.assertTrue(False, "Request not saved")
         self.assertEqual(log_item.path, test_path)
         self.assertEqual(log_item.method, 'G')
-        params = QueryDict(log_item.request_dict)
+        params = http.QueryDict(log_item.request_dict)
         self.assertEqual(params['a'], '1')
         self.assertEqual(params['b'], '2')
 
@@ -78,25 +78,21 @@ class AuthTest(TestCase):
         self.client.post('/login/', {'username': test_name, 'password': test_paswd})
 
 
+person_params = { 'firstname': 'Evgeniy', 
+                  'lastname': 'Slusar', 
+                  'email': 'abs@gmail.com', 
+                  'phone': '0000000000', 
+                  'biography': 'bio',
+                  'birthdate': date(2010,1,1)
+}
+
 class PersonEditTest(AuthTest):
 
     def test_person_edit(self):
-        params = { 'firstname': 'Evgeniy', 
-                   'lastname': 'Slusar', 
-                   'email': 'abs@gmail.com', 
-                   'phone': '0000000000', 
-                   'biography': 'bio',
-                   'birthdate': date(2010,1,1)
-       }
-
-        self.client.post('/edit/', params)
+        self.client.post('/edit/', person_params)
         dp = default_person()
-        self.assertEqual(dp.firstname, params['firstname'])
-        self.assertEqual(dp.lastname, params['lastname'])
-        self.assertEqual(dp.email, params['email'])
-        self.assertEqual(dp.phone, params['phone'])
-        self.assertEqual(dp.biography, params['biography'])
-        self.assertEqual(dp.birthdate, params['birthdate'])
+        for attr, value in person_params.iteritems():
+            self.assertEqual(getattr(dp, attr), value)
 
 
 
@@ -201,6 +197,20 @@ class ListViewTest(TestCase):
         self.assertTrue(entries.has_previous)
         self.assertEqual(entries.number, 2)
 
+
+class FormAjaxTest(AuthTest):
+    def test_person_edit(self):
+        self.client.post('/edit_ajax/', person_params)
+        dp = default_person()
+        for attr, value in person_params.iteritems():
+            self.assertEqual(getattr(dp, attr), value)
+
+        response = self.client.get('/edit_ajax/', person_params)
+        self.assertTrue(isinstance(response, http.HttpResponseNotAllowed))
+
+        self.client.post('/logout/')
+        response = self.client.post('/edit_ajax/', person_params)
+        self.assertTrue(isinstance(response, http.HttpResponseForbidden))
 
 
 

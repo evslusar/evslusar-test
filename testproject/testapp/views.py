@@ -1,10 +1,11 @@
 # Create your views here.
 
 from testapp.models import *
-from testapp.forms import PersonForm
+from testapp.forms import PersonForm, AjaxPersonForm
 
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse 
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -42,16 +43,27 @@ def request_log_view(request):
 
 @login_required
 def edit_view(request):
-    form = PersonForm()
+    form = AjaxPersonForm()
     if request.method == 'GET':
-        form = PersonForm(instance=default_person())
+        form = AjaxPersonForm(instance=default_person())
     elif request.method == 'POST':
-        form = PersonForm(request.POST, instance=default_person())
+        form = AjaxPersonForm(request.POST, instance=default_person())
         if form.is_valid(): 
             form.save()
             return HttpResponseRedirect('/')
     return render_to_response('person_edit.html', {'form' : form}, context_instance=RequestContext(request))
 
+def edit_ajax_view(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated():
+            form = AjaxPersonForm(request.POST, instance=default_person())
+            if form.is_valid(): 
+                form.save() 
+            return HttpResponse(form.as_p_with_submit())
+        else:
+            return HttpResponseForbidden('Login required!')
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 def logout_view(request):

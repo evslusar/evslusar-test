@@ -1,4 +1,5 @@
-$(function() {
-		$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-	});
+function addDatePicker() {
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+}
+
 
