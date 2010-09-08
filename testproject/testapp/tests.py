@@ -213,6 +213,20 @@ class FormAjaxTest(AuthTest):
         self.assertTrue(isinstance(response, http.HttpResponseForbidden))
 
 
+class RequestPriorityTest(TestCase):
+    def make_test_request(self, prior_value):
+        self.client.get('/?prior=%d' % prior_value)
+
+    def test_request_priority(self):
+        priority_values = (2, 3, 4)
+        for val in priority_values:
+            make_test_request(val)
+            try:
+                log_item = HttpRequestLog.objects.get(priority__value__exact=val)
+            except ObjectDoesNotExist:
+                self.assertTrue(False, "Request not saved")
+        
+
 
 
 
