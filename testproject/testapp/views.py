@@ -25,18 +25,38 @@ def default_person_info():
     info = { 'queryset': Person.objects.all(), 'object_id': p.pk, 'template_name': 'person_detail.html' }
     return info
 
-def request_log_view(request):
+
+def select_priority_val(request):
+    try:
+        val = int(request.REQUEST['select'])
+    except:
+        val = 1
+    if val <= 0:
+        val = 1
+    return val
+
+def get_log_entries(prior_val):
     all_entries = HttpRequestLog.objects.all().order_by('-request_date')
-    entries_paginator = Paginator(all_entries, 10)
+    return all_entries.filter(priority__value__exact=prior_val)
+
+def paginate(objects, request):
+    pagination = Paginator(objects, 10)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     try:
-        entries = entries_paginator.page(page)
+        entries = pagination.page(page)
     except (EmptyPage, InvalidPage):
-        entries = entries_paginator.page(1)
-    return render_to_response('request_log_list.html', {'entries' : entries}, context_instance=RequestContext(request))
+        entries = pagination.page(1) 
+    return entries
+    
+def request_log_view(request):
+    prior_val = select_priority_val(request)
+    entries = get_log_entries(prior_val)
+    entries_page = paginate(entries, request)
+    args = {'entries': entries_page, 'select': str(prior_val)}
+    return render_to_response('request_log_list.html', args, context_instance=RequestContext(request))
 
 
 

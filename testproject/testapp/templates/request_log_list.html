@@ -4,16 +4,17 @@
 {% block content %}
 
 <h1>Request log</h1>
+<h2>requests with priority #{{ select }}</h2>
 <ul>
     {% for entry in entries.object_list %}
         <li>{{ entry.request_string }} at {{ entry.request_date|date }} {{ entry.request_date|time }}</li>
     {% endfor %}
 </ul>
 {% if entries.has_previous %}
-    <a href="?page={{ entries.previous_page_number }}">Earlier</a>
+    <a href="?page={{ entries.previous_page_number }}&select= {{ select }}">Earlier</a>
 {% endif %}
 {% if entries.has_next %}
-    <a href="?page={{ entries.next_page_number }}">Older</a>
+    <a href="?page={{ entries.next_page_number }}&select={{ select }}">Older</a>
 {% endif %}
 
 {% endblock %}
