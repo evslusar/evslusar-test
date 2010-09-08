@@ -8,7 +8,7 @@ from testapp.views import default_person_info
 from testapp.views import default_person
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import QueryDict
+from django import http
 from testapp.models import HttpRequestLog
 
 from django.contrib.auth.models import User
@@ -60,7 +60,7 @@ class HttpRequestLogTest(TestCase):
             self.assertTrue(False, "Request not saved")
         self.assertEqual(log_item.path, test_path)
         self.assertEqual(log_item.method, 'G')
-        params = QueryDict(log_item.request_dict)
+        params = http.QueryDict(log_item.request_dict)
         self.assertEqual(params['a'], '1')
         self.assertEqual(params['b'], '2')
 
@@ -205,9 +205,12 @@ class FormAjaxTest(AuthTest):
         for attr, value in person_params.iteritems():
             self.assertEqual(getattr(dp, attr), value)
 
+        response = self.client.get('/edit_ajax/', person_params)
+        self.assertTrue(isinstance(response, http.HttpResponseNotAllowed))
+
         self.client.post('/logout/')
         response = self.client.post('/edit_ajax/', person_params)
-        self.assertContains(response, 'Login required!')
+        self.assertTrue(isinstance(response, http.HttpResponseForbidden))
 
 
 

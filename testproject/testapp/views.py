@@ -4,7 +4,8 @@ from testapp.models import *
 from testapp.forms import PersonForm, AjaxPersonForm
 
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse 
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -42,7 +43,7 @@ def request_log_view(request):
 
 @login_required
 def edit_view(request):
-    form = PersonForm()
+    form = AjaxPersonForm()
     if request.method == 'GET':
         form = AjaxPersonForm(instance=default_person())
     elif request.method == 'POST':
@@ -60,7 +61,9 @@ def edit_ajax_view(request):
                 form.save() 
             return HttpResponse(form.as_p_with_submit())
         else:
-            return HttpResponse('Login required!')
+            return HttpResponseForbidden('Login required!')
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 def logout_view(request):
