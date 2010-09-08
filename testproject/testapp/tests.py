@@ -78,25 +78,21 @@ class AuthTest(TestCase):
         self.client.post('/login/', {'username': test_name, 'password': test_paswd})
 
 
+person_params = { 'firstname': 'Evgeniy', 
+                  'lastname': 'Slusar', 
+                  'email': 'abs@gmail.com', 
+                  'phone': '0000000000', 
+                  'biography': 'bio',
+                  'birthdate': date(2010,1,1)
+}
+
 class PersonEditTest(AuthTest):
 
     def test_person_edit(self):
-        params = { 'firstname': 'Evgeniy', 
-                   'lastname': 'Slusar', 
-                   'email': 'abs@gmail.com', 
-                   'phone': '0000000000', 
-                   'biography': 'bio',
-                   'birthdate': date(2010,1,1)
-       }
-
-        self.client.post('/edit/', params)
+        self.client.post('/edit/', person_params)
         dp = default_person()
-        self.assertEqual(dp.firstname, params['firstname'])
-        self.assertEqual(dp.lastname, params['lastname'])
-        self.assertEqual(dp.email, params['email'])
-        self.assertEqual(dp.phone, params['phone'])
-        self.assertEqual(dp.biography, params['biography'])
-        self.assertEqual(dp.birthdate, params['birthdate'])
+        for attr, value in person_params.iteritems():
+            self.assertEqual(getattr(dp, attr), value)
 
 
 
@@ -201,6 +197,13 @@ class ListViewTest(TestCase):
         self.assertTrue(entries.has_previous)
         self.assertEqual(entries.number, 2)
 
+
+class FormAjaxTest(AuthTest):
+    def test_person_edit(self):
+        self.client.post('/edit_ajax/', person_params)
+        dp = default_person()
+        for attr, value in person_params.iteritems():
+            self.assertEqual(getattr(dp, attr), value)
 
 
 
