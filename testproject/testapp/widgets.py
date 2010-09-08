@@ -6,7 +6,7 @@ class CalendarWidget(TextInput):
         css = {
             'all': (settings.SITE_MEDIA_PREFIX + 'css/ui-lightness/jquery-ui-1.8.4.custom.css',)
         }
-        js = (settings.SITE_MEDIA_PREFIX + "js/jquery-1.4.2.min.js", 
+        js = (settings.SITE_MEDIA_PREFIX + "js/jquery-1.4.2.min.js",
               settings.SITE_MEDIA_PREFIX + "js/jquery-ui-1.8.4.custom.min.js",
               settings.SITE_MEDIA_PREFIX + "js/datepicker.js",)
 

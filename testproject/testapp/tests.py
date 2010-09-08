@@ -205,6 +205,10 @@ class FormAjaxTest(AuthTest):
         for attr, value in person_params.iteritems():
             self.assertEqual(getattr(dp, attr), value)
 
+        self.client.post('/logout/')
+        response = self.client.post('/edit_ajax/', person_params)
+        self.assertContains(response, 'Login required!')
+
 
 
 
