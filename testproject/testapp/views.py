@@ -55,7 +55,7 @@ def edit_view(request):
 def edit_ajax_view(request):
     if request.method == 'POST':
         if request.user.is_authenticated():
-            form = PersonForm(request.POST, instance=default_person())
+            form = AjaxPersonForm(request.POST, instance=default_person())
             if form.is_valid(): 
                 form.save() 
             return HttpResponse(form.as_p_with_submit())

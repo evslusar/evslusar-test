@@ -4,9 +4,10 @@ $(document).ready(function() {
         url:            '/edit_ajax/',
         beforeSubmit:  disableForm,  
         success:       enableForm
-    }; 
- 
+    };  
     $('#person-edit-form').ajaxForm(options);
+
+    addDatePicker();
 });
 
 function disableInput(index) {
@@ -22,4 +23,6 @@ function disableForm(formData, jqForm, options) {
 function enableForm(responseText, statusText, xhr, $form) {
     $('#person-edit-form').find('input').removeAttr('disabled');
     $('#person-edit-form').find('textarea').removeAttr('disabled');
+
+    addDatePicker();
 }
