@@ -9,7 +9,10 @@ class Person(models.Model):
     phone = models.CharField(max_length=10)
     biography = models.TextField()
     birthdate = models.DateField()
+
     
+class RequestPriority(models.Model):
+    value = models.PositiveIntegerField(unique=True)
 
 class HttpRequestLog(models.Model):
 
@@ -22,6 +25,7 @@ class HttpRequestLog(models.Model):
     method = models.CharField(max_length=1, choices=request_method_choices)
     request_date = models.DateTimeField(auto_now_add=True)
     request_dict = models.TextField()
+    priority = models.ForeignKey(RequestPriority)
 
     def request_string(self):
         if self.method == 'G':

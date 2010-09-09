@@ -10,6 +10,38 @@
       "biography": "My biography...",
       "birthdate": "1987-04-19"
     }
+  },
+
+  {
+    "model": "testapp.requestpriority",
+    "pk": 1,
+    "fields": {
+      "value": 1
+    }
+  },
+
+  {
+    "model": "testapp.requestpriority",
+    "pk": 2,
+    "fields": {
+      "value": 2
+    }
+  },
+
+  {
+    "model": "testapp.requestpriority",
+    "pk": 3,
+    "fields": {
+      "value": 3
+    }
+  },
+
+  {
+    "model": "testapp.requestpriority",
+    "pk": 4,
+    "fields": {
+      "value": 4
+    }
   }
 
 ]

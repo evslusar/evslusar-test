@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.forms.util import ErrorList
-from testapp.models import Person
+from testapp.models import Person, RequestPriority
 from testapp.widgets import CalendarWidget
 
 
@@ -24,4 +24,15 @@ class AjaxPersonForm(PersonForm):
         js = (settings.SITE_MEDIA_PREFIX + "js/jquery-1.4.2.min.js",
               settings.SITE_MEDIA_PREFIX + "js/jquery-form-2.4.7.js",
               settings.SITE_MEDIA_PREFIX + "js/edit_ajax.js",)
+
+
+def make_priority_choices():
+    all_priors = RequestPriority.objects.all()
+    vals = [prior.value for prior in all_priors]
+    names = ['Priority #%d' % val for val in vals]
+    choices = zip(vals, names)
+    return choices
+
+class SelectForm(forms.Form):
+    select = forms.ChoiceField(make_priority_choices())
 
