@@ -1,7 +1,7 @@
 # Create your views here.
 
 from testapp.models import *
-from testapp.forms import PersonForm, AjaxPersonForm
+from testapp.forms import PersonForm, AjaxPersonForm, SelectForm
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse 
@@ -33,6 +33,10 @@ def select_priority_val(request):
         val = 1
     if val <= 0:
         val = 1
+    try:
+        prior = RequestPriority.objects.get(value__exact=val)
+    except:
+        val=1
     return val
 
 def get_log_entries(prior_val):
@@ -50,12 +54,14 @@ def paginate(objects, request):
     except (EmptyPage, InvalidPage):
         entries = pagination.page(1) 
     return entries
-    
+
 def request_log_view(request):
     prior_val = select_priority_val(request)
     entries = get_log_entries(prior_val)
     entries_page = paginate(entries, request)
     args = {'entries': entries_page, 'select': str(prior_val)}
+    select_form = SelectForm(auto_id=False, initial={'select': prior_val})
+    args['select_form'] = select_form
     return render_to_response('request_log_list.html', args, context_instance=RequestContext(request))
 
 

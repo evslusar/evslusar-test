@@ -4,6 +4,11 @@
 {% block content %}
 
 <h1>Request log</h1>
+<form action="/log/" method="POST">
+<label>Select priority:</label>
+{{ select_form.select }}
+<input type="submit" value="Show" />
+</form>
 <h2>requests with priority #{{ select }}</h2>
 <ul>
     {% for entry in entries.object_list %}
