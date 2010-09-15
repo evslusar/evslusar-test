@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-
 {% block content %}
+<h2>Some of django settings</h2>
 
-<h1>Some of django settings</h1>
-
-<h2>Database engine:</h2> {{ settings.DATABASE_ENGINE }}
-<h2>Database name:</h2>  {{ settings.DATABASE_NAME }}
-<h2>Installed applications:</h2>
+<dl>
+<dt>Database engine:</dt><dd>{{ settings.DATABASE_ENGINE }}</dd>
+<dt>Database name:</dt><dd>{{ settings.DATABASE_NAME }}</dd>
+<dt>Installed apps:</dt>
+<dd>
 {% for app in settings.INSTALLED_APPS %}
 	{{ app }}<br>
 {% endfor %}
-
+</dd>
 {% endblock %}
