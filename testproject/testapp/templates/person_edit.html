@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-
-<h1>Person edit</h1>
-
+<h2>Person edit</h2>
 <form action="/edit/" method="POST">
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
-
 {% endblock %}
