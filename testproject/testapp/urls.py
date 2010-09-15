@@ -9,12 +9,6 @@ urlpatterns = patterns('',
     (r'^log/$', list_detail.object_list, request_log_info()),
     (r'^edit/$', edit_view),
     (r'^settings/$', settings_view),
-    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
-    (r'^logout/$', logout_view)
-)
-
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': './media/'}),
-    )
-
+    (r'^login/$', 'django.contrib.auth.views.login',
+        {'template_name': 'login.html'}),
+    (r'^logout/$', logout_view))
