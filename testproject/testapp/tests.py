@@ -1,20 +1,15 @@
-
-
 from django.test import TestCase
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import QueryDict
 
 from testapp.models import Person
 from testapp.views import default_person_info
-
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import QueryDict
 from testapp.models import HttpRequestLog
 
 
 class PersonModelTest(TestCase):
 
     def test_initial_data(self):
-
-        # test initial data loaded
         person = Person.objects.get(pk=1)
         self.assertTrue(person)
         self.assertEqual(person.firstname, "Evgeniy")
@@ -30,16 +25,15 @@ class DefaultPersonInfoTest(TestCase):
         self.assertEqual(info['template_name'], "person_detail.html")
         self.assertTrue(info['queryset'])
 
-        default_person = info['queryset'].get(pk = info['object_id'])
+        default_person = info['queryset'].get(pk=info['object_id'])
         self.assertEqual(default_person.firstname, "Evgeniy")
         self.assertEqual(default_person.lastname, "Slusar")
 
 
 class HttpRequestLogTest(TestCase):
 
-
     def get_log_item(self, path):
-        return HttpRequestLog.objects.get(path__iexact = path)
+        return HttpRequestLog.objects.get(path__iexact=path)
 
     def test_request_log(self):
         test_path = '/'
@@ -55,7 +49,3 @@ class HttpRequestLogTest(TestCase):
         params = QueryDict(log_item.request_dict)
         self.assertEqual(params['a'], '1')
         self.assertEqual(params['b'], '2')
-        
-
-        
-
