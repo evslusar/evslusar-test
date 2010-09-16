@@ -9,12 +9,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = './db/test.db'             # Or path to database file if using sqlite3.
+DATABASE_ENGINE = 'sqlite3'           # 'sqlite3'
+DATABASE_NAME = './db/test.db'             # Or path to database file
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASE_HOST = ''
+DATABASE_PORT = ''
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -47,9 +47,6 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
-# URL prefix for static media files
-SITE_MEDIA_PREFIX = '/site_media/'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ')dvzh_)yw^j@s!hx*5x!@3ep++7hr8=*m+ia^-)y7x#-af+fx0'
 
@@ -57,30 +54,19 @@ SECRET_KEY = ')dvzh_)yw^j@s!hx*5x!@3ep++7hr8=*m+ia^-)y7x#-af+fx0'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+     'django.template.loaders.eggs.load_template_source',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'testproject.testapp.requestlog.HttpRequestLogger',
-)
+    'django.contrib.csrf.middleware.CsrfMiddleware',
+    'testproject.testapp.requestlog.HttpRequestLogger']
 
 ROOT_URLCONF = 'testproject.urls'
 
-LOGIN_URL = '/login/'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    #"/home/evgeniy/evslusar-test/testproject/templates"
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
-)
+TEMPLATE_DIRS = ()
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -89,3 +75,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'testproject.testapp',
 )
+
+STATIC_MEDIA_ROOT = './media/'
+STATIC_MEDIA_PREFIX = 'static_media/'
+
+LOGIN_URL = '/login/'
