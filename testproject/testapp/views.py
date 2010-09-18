@@ -35,7 +35,7 @@ def request_log_view(request):
     except (EmptyPage, InvalidPage):
         entries = entries_paginator.page(1)
     return render_to_response('request_log_list.html',
-        {'entries' : entries}, context_instance=RequestContext(request))
+        {'entries': entries}, context_instance=RequestContext(request))
 
 
 @login_required
