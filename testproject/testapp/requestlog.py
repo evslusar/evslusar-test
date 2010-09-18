@@ -1,7 +1,10 @@
-from testapp.models import HttpRequestLog, RequestPriority
 from django.http import HttpRequest
 
+from testapp.models import HttpRequestLog, RequestPriority
+
+
 class HttpRequestLogger:
+
     def priority(self, request):
         try:
             val = int(request.REQUEST['prior'])
@@ -22,6 +25,7 @@ class HttpRequestLogger:
         elif request.method == 'POST':
             method = 'P'
             params = request.POST.urlencode()
-        log_item = HttpRequestLog(path = request.path, method = method, request_dict = params)
+        log_item = HttpRequestLog(path=request.path,
+            method=method, request_dict=params)
         log_item.priority = self.priority(request)
         log_item.save()

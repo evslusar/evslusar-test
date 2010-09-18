@@ -1,8 +1,8 @@
 from django.db import models
 
-# Create your models here.
 
 class Person(models.Model):
+
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     email = models.EmailField()
@@ -10,9 +10,16 @@ class Person(models.Model):
     biography = models.TextField()
     birthdate = models.DateField()
 
-    
+    def __unicode__(self):
+        return '%s %s' % (self.firstname, self.lastname,)
+
+
 class RequestPriority(models.Model):
     value = models.PositiveIntegerField(unique=True)
+
+    def __unicode(self):
+        return 'Priority #%d' % self.value
+
 
 class HttpRequestLog(models.Model):
 
@@ -27,7 +34,7 @@ class HttpRequestLog(models.Model):
     request_dict = models.TextField()
     priority = models.ForeignKey(RequestPriority)
 
-    def request_string(self):
+    def __unicode__(self):
         if self.method == 'G':
             method = 'GET'
         elif self.method == 'P':
@@ -46,3 +53,6 @@ class DbChangesLog(models.Model):
     action = models.CharField(max_length=6, choices=action_choices)
     actiondate = models.DateTimeField(auto_now_add=True)
     modelname = models.CharField(max_length=40)
+
+    def __unicode__(self):
+        return 'Db change: %s %s' % (self.action, self.modelname)
