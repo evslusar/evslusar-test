@@ -1,15 +1,18 @@
 from django.db import models
 
-# Create your models here.
 
 class Person(models.Model):
+
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     email = models.EmailField()
     phone = models.CharField(max_length=10)
     biography = models.TextField()
     birthdate = models.DateField()
-    
+
+    def __unicode__(self):
+        return '%s %s' % (self.firstname, self.lastname,)
+
 
 class HttpRequestLog(models.Model):
 
@@ -23,7 +26,7 @@ class HttpRequestLog(models.Model):
     request_date = models.DateTimeField(auto_now_add=True)
     request_dict = models.TextField()
 
-    def request_string(self):
+    def __unicode__(self):
         if self.method == 'G':
             method = 'GET'
         elif self.method == 'P':
@@ -42,3 +45,6 @@ class DbChangesLog(models.Model):
     action = models.CharField(max_length=6, choices=action_choices)
     actiondate = models.DateTimeField(auto_now_add=True)
     modelname = models.CharField(max_length=40)
+
+    def __unicode__(self):
+        return 'Db change: %s %s' % (self.action, self.modelname)
