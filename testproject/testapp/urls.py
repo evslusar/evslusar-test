@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.views.generic import list_detail
 
 from testapp.views import *
+from testapp.requestviews import request_log_view, edit_priority_view
 
 
 admin.autodiscover()
@@ -11,6 +12,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^$', list_detail.object_detail, default_person_info()),
     (r'^log/$', request_log_view),
+    (r'^edit_priority/$', edit_priority_view),
     (r'^edit/$', edit_view),
     (r'^edit_ajax/$', edit_ajax_view),
     (r'^settings/$', settings_view),

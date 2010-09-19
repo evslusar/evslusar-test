@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 
-from testapp.models import Person, RequestPriority
+from testapp.models import Person, RequestPriority, HttpRequestLog
 from testapp.widgets import CalendarWidget
 
 
@@ -32,13 +32,28 @@ class AjaxPersonForm(PersonForm):
             media_prefix + "js/edit_ajax.js",)
 
 
-def make_priority_choices():
-    all_priors = RequestPriority.objects.all()
-    vals = [prior.value for prior in all_priors]
-    names = ['Priority #%d' % val for val in vals]
-    choices = zip(vals, names)
-    return choices
+def priorities():
+    return RequestPriority.objects.all()
 
 
-class SelectForm(forms.Form):
-    select = forms.ChoiceField(make_priority_choices())
+def requests():
+    query = HttpRequestLog.objects.all()
+    query = query.order_by('-request_date')
+    query = query.order_by('priority__value')
+    return query
+
+
+class PriorityEditForm(forms.Form):
+
+    priority = forms.ModelChoiceField(required=True,
+        queryset=priorities(),
+        error_messages={'required': 'Select a priority'})
+    requests = forms.ModelMultipleChoiceField(required=True,
+        queryset=requests(),
+        error_messages={'required': 'Select at least one request'})
+
+    def save_edition(self):
+        if self.is_bound and self.is_valid():
+            new_priority = self.cleaned_data['priority']
+            updated_requests = self.cleaned_data['requests']
+            updated_requests.update(priority=new_priority)

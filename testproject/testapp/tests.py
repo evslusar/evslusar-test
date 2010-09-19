@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core import urlresolvers, paginator
 
-from testapp.models import Person, HttpRequestLog, DbChangesLog
+from testapp.models import Person, HttpRequestLog, DbChangesLog, \
+    RequestPriority
 from testapp.views import default_person_info, default_person
 from testapp.management.commands import countitems
 
@@ -232,15 +233,15 @@ class ListViewTest(TestCase):
 
 class RequestPriorityTest(TestCase):
 
-    def make_test_request(self, prior_value):
-        self.client.get('/?prior=%d' % prior_value)
+    def check_edition(self, requests, priority):
+        keys = [unicode(request.pk) for request in requests]
+        prior_key = [unicode(priority.pk)]
+        post_dict = {'requests': keys, 'priority': prior_key}
+        self.client.post('edit_priority', post_dict)
+        for request in requests:
+            self.assertEqual(request.priority, priority)
 
-    def test_request_priority(self):
-        priority_values = (2, 3, 4)
-        for val in priority_values:
-            self.make_test_request(val)
-            try:
-                log_item = \
-                    HttpRequestLog.objects.get(priority__value__exact=val)
-            except ObjectDoesNotExist:
-                self.assertTrue(False, "Request not saved")
+    def test_priority_edition(self):
+        test_requests = HttpRequestLog.objects.all()[:5]
+        test_priority = RequestPriority.objects.get(value__exact=4)
+        self.check_edition(test_requests, test_priority)

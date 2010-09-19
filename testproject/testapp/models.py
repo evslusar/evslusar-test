@@ -17,7 +17,7 @@ class Person(models.Model):
 class RequestPriority(models.Model):
     value = models.PositiveIntegerField(unique=True)
 
-    def __unicode(self):
+    def __unicode__(self):
         return 'Priority #%d' % self.value
 
 
@@ -39,7 +39,7 @@ class HttpRequestLog(models.Model):
             method = 'GET'
         elif self.method == 'P':
             method = 'POST'
-        return "%s %s" % (method, self.path,)
+        return "%s %s prior #%d" % (method, self.path, self.priority.value)
 
 
 class DbChangesLog(models.Model):

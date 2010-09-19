@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit priority</h2>
+<form action="/edit_priority/" method="POST">
+{{ edit_form.as_p }}
+<input type="submit" value="Set priority"/>
+</form>
+{% endblock %}

@@ -4,10 +4,9 @@ from django.http import HttpResponseRedirect, HttpResponse, \
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
-from testapp.models import Person, HttpRequestLog, RequestPriority
-from testapp.forms import PersonForm, AjaxPersonForm, SelectForm
+from testapp.models import Person
+from testapp.forms import PersonForm, AjaxPersonForm
 from testapp.contextprocs import settings_context_proc
 
 
@@ -21,49 +20,6 @@ def default_person_info():
         'object_id': p.pk,
         'template_name': 'person_detail.html'}
     return info
-
-
-def select_priority_val(request):
-    try:
-        val = int(request.REQUEST['select'])
-    except:
-        val = 1
-    if val <= 0:
-        val = 1
-    try:
-        prior = RequestPriority.objects.get(value__exact=val)
-    except:
-        val = 1
-    return val
-
-
-def get_log_entries(prior_val):
-    all_entries = HttpRequestLog.objects.all().order_by('-request_date')
-    return all_entries.filter(priority__value__exact=prior_val)
-
-
-def paginate(objects, request):
-    pagination = Paginator(objects, 10)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        entries = pagination.page(page)
-    except (EmptyPage, InvalidPage):
-        entries = pagination.page(1)
-    return entries
-
-
-def request_log_view(request):
-    prior_val = select_priority_val(request)
-    entries = get_log_entries(prior_val)
-    entries_page = paginate(entries, request)
-    args = {'entries': entries_page, 'select': str(prior_val)}
-    select_form = SelectForm(auto_id=False, initial={'select': prior_val})
-    args['select_form'] = select_form
-    return render_to_response('request_log_list.html', args,
-        context_instance=RequestContext(request))
 
 
 @login_required
